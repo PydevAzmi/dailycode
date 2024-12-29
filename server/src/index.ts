@@ -1,5 +1,6 @@
 import express, { RequestHandler } from 'express';
 import moment from 'moment';
+import { createPostHandler, listPostsHandler } from './handlers/postHandlers';
 const app = express();
 
 app.use(express.json());
@@ -11,9 +12,8 @@ const requestLoggerHandler:RequestHandler = (req, res, next) => {
 
 app.use(requestLoggerHandler);
 
-app.get('/', (req, res)=>{
-    res.send('Hello World');
-})
+app.get("/posts", listPostsHandler);   
+app.post("/posts", createPostHandler);
 
 app.listen(3000, ()=>{
     console.log('Server is running on port 3000');
