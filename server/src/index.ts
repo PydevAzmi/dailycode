@@ -6,9 +6,7 @@ const app = express();
 app.use(express.json());
 
 const requestLoggerHandler: RequestHandler = (req, res, next) => {
-  console.log(
-    `${moment().format('MM/DD/YYYY HH:mm:ss')} : [${res.statusCode}] ${req.method} ${req.path}`
-  );
+  console.log(`${moment().format('MM/DD/YYYY HH:mm:ss')} : [${res.statusCode}] ${req.method} ${req.path}`);
   next();
 };
 
