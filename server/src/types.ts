@@ -39,5 +39,3 @@ export type ExpressHandler<req,res> = RequestHandler<
     >
 
     
-export type createPostRequest = Pick<Post, 'title' | 'url' | 'userId'>;  
-export type createPostResponse = {}; 

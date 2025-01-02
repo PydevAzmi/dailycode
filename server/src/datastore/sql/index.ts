@@ -32,14 +32,20 @@ export class sqlDataStore implements DataStore {
     deletePost(id: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    createUser(user: User): Promise<void> {
-        throw new Error("Method not implemented.");
+    async createUser(user: User): Promise<void> {
+        await this.db.run(
+            'INSERT INTO user (id, username, firstName, lastName, email, password) VALUES (?,?,?,?,?,?)',
+            [user.id, user.username, user.firstName, user.lastName, user.email, user.password]
+        )
     }
-    getUserById(id: string): Promise<User | undefined> {
-        throw new Error("Method not implemented.");
+    async getUserById(id: string): Promise<User | undefined> {
+        return await this.db.get<User>('SELECT * FROM user WHERE id = ?', [id])
     }
-    getUserByEmail(email: string): Promise<User | undefined> {
-        throw new Error("Method not implemented.");
+    async getUserByEmail(email: string): Promise<User | undefined> {
+        return await this.db.get<User>('SELECT * FROM user WHERE email = ?', [email])
+    }
+    async getUserByUsername(username: string): Promise<User | undefined> {
+        return await this.db.get<User>('SELECT * FROM user WHERE username = ?', [username])
     }
     createComment(comment: Comment): Promise<void> {
         throw new Error("Method not implemented.");

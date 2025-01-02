@@ -1,10 +1,9 @@
 import { RequestHandler } from 'express';
 import { db } from '../datastore';
 import { Post, ExpressHandler } from '../types';
+import { createPostRequest, createPostResponse } from '../api';
 import crypto from 'crypto';
 
-type createPostRequest = Pick<Post, 'title' | 'url' | 'userId'>;
-type createPostResponse = {};
 
 export const createPostHandler: ExpressHandler<createPostRequest, createPostResponse> = async (req, res) => {
   if (!req.body.title || !req.body.url || !req.body.userId) {

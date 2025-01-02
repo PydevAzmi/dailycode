@@ -3,6 +3,7 @@ import moment from 'moment';
 import { createPostHandler, listPostsHandler } from './handlers/postHandlers';
 import asyncHandler from 'express-async-handler';
 import { InitDB } from './datastore';
+import { SignUpHandler } from './handlers/UserHandlers';
 
 (async () => {
   await InitDB();
@@ -23,8 +24,9 @@ import { InitDB } from './datastore';
   
   app.use(requestLoggerHandler);
   
-  app.get('/posts', asyncHandler(listPostsHandler));
-  app.post('/posts', asyncHandler(createPostHandler));
+  app.get('/v1/posts', asyncHandler(listPostsHandler));
+  app.post('/v1/posts', asyncHandler(createPostHandler));
+  app.post('/v1/signup', asyncHandler(SignUpHandler));
   app.use(errorHandler);
   
   app.listen(3000, () => {

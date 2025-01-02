@@ -2,6 +2,7 @@ import { DataStore } from '../';
 import { Post, User, Comment, Like } from '../../types';
 
 export class InMemoryDataStore implements DataStore {
+
     private users: User[] = [];
     private posts : Post[] = [];
     private comments : Comment[] = [];
@@ -18,6 +19,7 @@ export class InMemoryDataStore implements DataStore {
     getPostsByUserId(userId: string): Promise<Post[]> {
         return Promise.resolve(this.posts.filter(post => post.userId === userId));
     }
+
     deletePost(id: string): Promise<void> {
         const idx= this.posts.findIndex(post => post.id === id);
         if(idx === -1){
@@ -41,7 +43,9 @@ export class InMemoryDataStore implements DataStore {
     getUserByEmail(email: string): Promise<User | undefined> {
         return Promise.resolve(this.users.find(user => user.email === email));
     }
-
+    getUserByUsername(username: string): Promise<User | undefined> {
+        return Promise.resolve(this.users.find(user => user.username === username));        
+    }
     // comments
     createComment(comment: Comment): Promise<void> {
         this.comments.push(comment);

@@ -2,7 +2,7 @@
 
 CREATE Table user(
     id serial primary key,
-    firtName VARCHAR not null,
+    firstName VARCHAR not null,
     lastName VARCHAR not null,
     username VARCHAR UNIQUE not null,
     email VARCHAR UNIQUE not null,
