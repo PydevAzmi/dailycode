@@ -6,7 +6,7 @@ import crypto from 'crypto';
 type createPostRequest = Pick<Post, 'title' | 'url' | 'userId'>;
 type createPostResponse = {};
 
-export const createPostHandler: ExpressHandler<createPostRequest, createPostResponse> = (req, res) => {
+export const createPostHandler: ExpressHandler<createPostRequest, createPostResponse> = async (req, res) => {
   if (!req.body.title || !req.body.url || !req.body.userId) {
     res.status(400).json({ error: 'Missing post' });
     return;
@@ -18,11 +18,11 @@ export const createPostHandler: ExpressHandler<createPostRequest, createPostResp
     userId: req.body.userId,
     createdAt: new Date().toISOString(),
   };
-  db.createPost(post);
+  await db.createPost(post);
   res.status(201).json(post);
 };
 
-export const listPostsHandler: ExpressHandler<{}, {}> = (req, res) => {
-  const posts = db.getPosts();
-  res.status(200).json(posts);
+export const listPostsHandler: ExpressHandler<{}, {}> = async (req, res) => {
+  const posts = await db.getPosts();
+  res.status(200).json({posts});
 };

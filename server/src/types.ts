@@ -2,9 +2,9 @@ import { RequestHandler } from "express";
 
 export interface User {
     id: string;
-    userName: string;
+    username: string;
     firstName: string;
-    lastname: string;
+    lastName: string;
     email: string;
     password: string;
 }
