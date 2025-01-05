@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import { db } from '../datastore';
 import { Post, ExpressHandler } from '../types';
-import { createPostRequest, createPostResponse } from '../api';
+import { createPostRequest, createPostResponse, listPostRequest, listPostResponse } from '../api';
 import crypto from 'crypto';
 
 
@@ -18,10 +18,10 @@ export const createPostHandler: ExpressHandler<createPostRequest, createPostResp
     createdAt: new Date().toISOString(),
   };
   await db.createPost(post);
-  res.status(201).json(post);
+  res.status(201).json({post});
 };
 
-export const listPostsHandler: ExpressHandler<{}, {}> = async (req, res) => {
+export const listPostsHandler: ExpressHandler<listPostRequest, listPostResponse> = async (req, res) => {
   const posts = await db.getPosts();
   res.status(200).json({posts});
 };

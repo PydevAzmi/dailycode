@@ -31,11 +31,18 @@ export interface Like {
     userId: string;
 }
 
+export type WithError<T> = T & { error: string };
+
 export type ExpressHandler<req,res> = RequestHandler<
     string,
-    Partial<res>,
-    Partial<req>,
+    Partial<WithError<res>>,
+    Partial<WithError<req>>,
     any
     >
+
+export type tokenPayload = {
+    id: string;
+    username: string;
+}
 
     
