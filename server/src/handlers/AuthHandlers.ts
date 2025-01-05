@@ -3,7 +3,6 @@ import { db } from '../datastore';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { ExpressHandler, tokenPayload, User } from '../types';
-import { exit } from 'process';
 
 export const SignInHandler :ExpressHandler<SignInRequest, SignInResponse> = async (req, res) =>{
   const { login, password } = req.body;
@@ -11,13 +10,19 @@ export const SignInHandler :ExpressHandler<SignInRequest, SignInResponse> = asyn
     res.status(400).json({ error: 'Missing login or password' });
     return;
   }
-  const user =await db.getUserByEmail(login) || await db.getUserByUsername(login);
+  const user = await db.getUserByEmail(login) || await db.getUserByUsername(login);
   if (!user || user.password !== hashPassword(password)) {
     res.status(401).json({ error: 'Invalid login or password' });
     return;
   }
   const token =  generateToken(user);
-  res.status(200).json({ token });
+  res.status(200).json({user:{
+    id: user.id,
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email
+  }, token });
 }
 
 
@@ -44,7 +49,13 @@ export const SignUpHandler: ExpressHandler<SignUpRequest, SignUpResponse> = asyn
 
   await db.createUser(user);
   const token =  generateToken(user);
-  res.status(200).json({ token });
+  res.status(200).json({user:{
+    id: user.id,
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email
+  }, token });
 };
 
 

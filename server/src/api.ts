@@ -11,6 +11,7 @@ export type listPostResponse = {posts:Post[]};
 // user
 export type SignUpRequest = Pick<User, 'username' | 'firstName' | 'lastName' | 'email' | 'password'>;
 export type SignUpResponse ={
+  user: Pick<User, 'id' | 'username' | 'firstName' | 'lastName' | 'email'> ,
   token: string;
 } 
 
@@ -19,6 +20,7 @@ export interface SignInRequest {
   password: string;
 }
 export type SignInResponse = {
+  user: Pick<User, 'id' | 'username' | 'firstName' | 'lastName' | 'email'> ,
   token: string;
 }
 
