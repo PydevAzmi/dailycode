@@ -16,9 +16,11 @@ export const authHandler :RequestHandler = async (req, res, next) => {
             res.status(401).json({ error: 'Invalid token' });
             return;
         }
+        res.locals.userId = user.id;
     }catch{
         res.status(401).json({ error: 'Invalid token' });
         return;
     }
+    
     next();
 };
